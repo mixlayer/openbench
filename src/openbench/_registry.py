@@ -123,6 +123,14 @@ def minimax() -> Type[ModelAPI]:
     return MiniMaxAPI
 
 
+@modelapi(name="mixlayer")
+def mixlayer() -> Type[ModelAPI]:
+    """Register Mixlayer provider."""
+    from .model._providers.mixlayer import MixlayerAPI
+
+    return MixlayerAPI
+
+
 @modelapi(name="friendli")
 def friendli() -> Type[ModelAPI]:
     """Register Friendli provider."""

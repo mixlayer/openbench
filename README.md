@@ -105,6 +105,7 @@ openbench supports 30+ model providers through Inspect AI. Set the appropriate A
 | **Hyperbolic**        | `HYPERBOLIC_API_KEY`   | `hyperbolic/model-name`          |
 | **Lambda**            | `LAMBDA_API_KEY`       | `lambda/model-name`              |
 | **MiniMax**           | `MINIMAX_API_KEY`      | `minimax/model-name`             |
+| **Mixlayer**          | `MIXLAYER_API_KEY`     | `mixlayer/model-name`            |
 | **Mistral**           | `MISTRAL_API_KEY`      | `mistral/model-name`             |
 | **Moonshot**          | `MOONSHOT_API_KEY`     | `moonshot/model-name`            |
 | **Nebius**            | `NEBIUS_API_KEY`       | `nebius/model-name`              |

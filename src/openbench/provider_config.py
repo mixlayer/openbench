@@ -32,6 +32,7 @@ class ProviderType(str, Enum):
     HYPERBOLIC = "hyperbolic"
     LAMBDA = "lambda"
     MINIMAX = "minimax"
+    MIXLAYER = "mixlayer"
     MISTRAL = "mistral"
     MOONSHOT = "moonshot"
     NEBIUS = "nebius"
@@ -237,6 +238,15 @@ PROVIDER_CONFIGS: Dict[ProviderType, ProviderConfig] = {
         api_key_env="MINIMAX_API_KEY",
         base_url="https://api.minimax.io/v1",
         base_url_env="MINIMAX_BASE_URL",
+        supports_vision=False,
+        supports_function_calling=True,
+    ),
+    ProviderType.MIXLAYER: ProviderConfig(
+        name="mixlayer",
+        display_name="Mixlayer",
+        api_key_env="MIXLAYER_API_KEY",
+        base_url="https://models.mixlayer.ai/v1",
+        base_url_env="MIXLAYER_BASE_URL",
         supports_vision=False,
         supports_function_calling=True,
     ),
