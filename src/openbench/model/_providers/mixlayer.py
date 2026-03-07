@@ -20,6 +20,7 @@ class MixlayerAPI(OpenAICompatibleAPI):
     ) -> None:
         # Remove service prefix if present
         model_name_clean = model_name.replace("mixlayer/", "", 1)
+        thinking = model_args.pop("thinking", None)
 
         base_url = base_url or os.environ.get(
             "MIXLAYER_BASE_URL", "https://models.mixlayer.ai/v1"
@@ -41,7 +42,24 @@ class MixlayerAPI(OpenAICompatibleAPI):
             **model_args,
         )
 
+        # Support Mixlayer-specific request-body options via model args.
+        self._extra_body = {}
+        if thinking is not None:
+            self._extra_body["thinking"] = thinking
+
+        if self._extra_body:
+            original_create = self.client.chat.completions.create
+
+            def create_with_mixlayer_options(**kwargs):
+                if "extra_body" not in kwargs:
+                    kwargs["extra_body"] = {}
+                if kwargs["extra_body"] is None:
+                    kwargs["extra_body"] = {}
+                kwargs["extra_body"].update(self._extra_body)
+                return original_create(**kwargs)
+
+            setattr(self.client.chat.completions, "create", create_with_mixlayer_options)
+
     def service_model_name(self) -> str:
         """Return model name without service prefix."""
         return self.model_name
-
