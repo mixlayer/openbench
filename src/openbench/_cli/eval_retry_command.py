@@ -5,6 +5,7 @@ from inspect_ai import eval_retry
 from inspect_ai.log._file import log_file_info
 from inspect_ai._util.file import filesystem
 from openbench.monkeypatch.display_results_patch import patch_display_results
+from openbench._cli.error_formatting import format_exception_with_causes
 
 
 def run_eval_retry(
@@ -230,8 +231,9 @@ def run_eval_retry(
             raise
         else:
             # In normal mode, show clean error message
-            error_msg = str(e)
-            typer.secho(f"\n❌ Error: {error_msg}", fg=typer.colors.RED, err=True)
+            error_msg = format_exception_with_causes(e)
+            typer.secho("\n❌ Error", fg=typer.colors.RED, err=True)
+            typer.secho(error_msg, fg=typer.colors.RED, err=True)
             typer.secho(
                 "\nFor full stack trace, run with --debug flag",
                 fg=typer.colors.CYAN,

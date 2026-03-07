@@ -14,6 +14,7 @@ from inspect_ai.log import EvalLog
 from openbench.config import load_task, EVAL_GROUPS
 from openbench.monkeypatch.display_results_patch import patch_display_results
 from openbench._cli.utils import parse_cli_args
+from openbench._cli.error_formatting import format_exception_with_causes
 from openbench.agents import AgentManager
 
 # Ensure pass_hat reducer is registered when CLI is used
@@ -847,8 +848,9 @@ def run_eval(
             else:
                 # In normal mode, show clean error message
                 console = Console(stderr=True)
-                error_msg = str(e)
-                console.print(f"\n[red bold]❌ {error_msg}[/red bold]")
+                error_msg = format_exception_with_causes(e)
+                console.print("\n[red bold]❌ Evaluation failed[/red bold]")
+                console.print(f"[red]{error_msg}[/red]")
                 console.print(
                     "\n[cyan]For full stack trace, run with --debug flag[/cyan]"
                 )
