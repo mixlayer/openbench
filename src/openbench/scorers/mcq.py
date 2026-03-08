@@ -47,7 +47,7 @@ MCQ_PATTERNS = [
         (?:\*{1,2}|_{1,2})?         # optional markdown wrapper again
         \s*:?\s*                    # optional colon with optional spaces
         (?:\*{1,2}|_{1,2})?         # optional markdown wrapper before letter
-        ([A-Z])                     # capture the letter
+        ([A-Z])\b                   # capture a standalone letter only
         (?:\*{1,2}|_{1,2})?         # optional markdown wrapper after letter
         \s*                         # optional trailing whitespace
     """,

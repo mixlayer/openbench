@@ -72,6 +72,18 @@ class TestMCQExtraction:
         # Multiple patterns (should get first/best match)
         assert extract_mcq_answer("Let me think... Answer: B\n\n(C) is wrong") == "B"
 
+        # Avoid false-positive "Answer s" from "Answer seems ..."
+        assert (
+            extract_mcq_answer("The calculated answer is 11.\n\nAnswer seems to be A.")
+            is None
+        )
+        assert (
+            extract_mcq_answer(
+                "The calculated answer is 11.\n\nAnswer seems to be A.\n\nAnswer: A"
+            )
+            == "A"
+        )
+
         # Case insensitive
         assert extract_mcq_answer("answer: a") == "A"
         assert extract_mcq_answer("ANSWER: B") == "B"
