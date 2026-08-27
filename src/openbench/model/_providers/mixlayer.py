@@ -69,11 +69,22 @@ class MixlayerAPI(OpenAICompatibleAPI):
                 kwargs["extra_body"].update(self._extra_body)
                 return original_create(**kwargs)
 
-            setattr(self.client.chat.completions, "create", create_with_mixlayer_options)
+            setattr(
+                self.client.chat.completions, "create", create_with_mixlayer_options
+            )
 
     def service_model_name(self) -> str:
         """Return model name without service prefix."""
         return self.model_name
+
+    def completion_params(self, config: GenerateConfig, tools: bool) -> dict[str, Any]:
+        """Build completion parameters, including Mixlayer's top-k extension."""
+        params = super().completion_params(config, tools)
+        if config.top_k is not None:
+            extra_body = dict(params.get("extra_body") or {})
+            extra_body.setdefault("top_k", config.top_k)
+            params["extra_body"] = extra_body
+        return params
 
     async def _generate_completion(
         self, request: dict[str, Any], config: GenerateConfig

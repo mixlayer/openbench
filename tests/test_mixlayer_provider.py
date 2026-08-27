@@ -80,6 +80,24 @@ def test_no_thinking_does_not_inject_extra_body() -> None:
     assert "extra_body" not in call
 
 
+def test_top_k_is_included_in_completion_extra_body() -> None:
+    provider = _make_provider()
+
+    params = provider.completion_params(GenerateConfig(top_k=20), tools=False)
+
+    assert params["extra_body"]["top_k"] == 20
+
+
+def test_explicit_extra_body_top_k_takes_precedence() -> None:
+    provider = _make_provider()
+
+    params = provider.completion_params(
+        GenerateConfig(top_k=20, extra_body={"top_k": 10}), tools=False
+    )
+
+    assert params["extra_body"]["top_k"] == 10
+
+
 class _AsyncStream:
     def __init__(self, chunks) -> None:
         self._chunks = chunks

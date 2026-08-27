@@ -510,6 +510,13 @@ def run_eval(
             envvar="BENCH_NO_SCORE",
         ),
     ] = False,
+    system_message: Annotated[
+        Optional[str],
+        typer.Option(
+            help="Additional system message prepended to benchmark messages",
+            envvar="BENCH_SYSTEM_MESSAGE",
+        ),
+    ] = None,
     temperature: Annotated[
         Optional[float],
         typer.Option(
@@ -522,6 +529,13 @@ def run_eval(
         typer.Option(
             help="Model top-p",
             envvar="BENCH_TOP_P",
+        ),
+    ] = None,
+    top_k: Annotated[
+        Optional[int],
+        typer.Option(
+            help="Model top-k",
+            envvar="BENCH_TOP_K",
         ),
     ] = None,
     max_tasks: Annotated[
@@ -806,8 +820,10 @@ def run_eval(
                 log_dir=log_dir,
                 score=score,
                 debug_errors=debug_errors,
+                system_message=system_message,
                 temperature=temperature,
                 top_p=top_p,
+                top_k=top_k,
                 max_tokens=max_tokens,
                 seed=seed,
                 display=display.value if display else None,

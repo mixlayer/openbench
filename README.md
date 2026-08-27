@@ -203,8 +203,10 @@ All cache data is stored under `~/.openbench`. The cache command helps you monit
 | `--epochs`           | `BENCH_EPOCHS`            | `1`                       | Number of epochs to run each evaluation                          |
 | `--epochs-reducer`   | `BENCH_EPOCHS_REDUCER`    | None                      | Reducer(s) applied when aggregating epoch scores.                |
 | `--max-connections`  | `BENCH_MAX_CONNECTIONS`   | `10`                      | Maximum parallel requests to model                               |
+| `--system-message`   | `BENCH_SYSTEM_MESSAGE`    | `None`                    | Additional system message prepended to benchmark messages        |
 | `--temperature`      | `BENCH_TEMPERATURE`       | `0.6`                     | Model temperature                                                |
 | `--top-p`            | `BENCH_TOP_P`             | `1.0`                     | Model top-p                                                      |
+| `--top-k`            | `BENCH_TOP_K`             | `None`                    | Model top-k                                                      |
 | `--max-tokens`       | `BENCH_MAX_TOKENS`        | `None`                    | Maximum tokens for model response                                |
 | `--seed`             | `BENCH_SEED`              | `None`                    | Seed for deterministic generation                                |
 | `--limit`            | `BENCH_LIMIT`             | `None`                    | Limit evaluated samples (number or start,end)                    |
