@@ -538,6 +538,13 @@ def run_eval(
             envvar="BENCH_TOP_K",
         ),
     ] = None,
+    presence_penalty: Annotated[
+        Optional[float],
+        typer.Option(
+            help="Model presence penalty",
+            envvar="BENCH_PRESENCE_PENALTY",
+        ),
+    ] = None,
     max_tasks: Annotated[
         Optional[int],
         typer.Option(
@@ -824,6 +831,7 @@ def run_eval(
                 temperature=temperature,
                 top_p=top_p,
                 top_k=top_k,
+                presence_penalty=presence_penalty,
                 max_tokens=max_tokens,
                 seed=seed,
                 display=display.value if display else None,

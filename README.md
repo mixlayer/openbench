@@ -207,6 +207,7 @@ All cache data is stored under `~/.openbench`. The cache command helps you monit
 | `--temperature`      | `BENCH_TEMPERATURE`       | `0.6`                     | Model temperature                                                |
 | `--top-p`            | `BENCH_TOP_P`             | `1.0`                     | Model top-p                                                      |
 | `--top-k`            | `BENCH_TOP_K`             | `None`                    | Model top-k                                                      |
+| `--presence-penalty` | `BENCH_PRESENCE_PENALTY`  | `None`                    | Model presence penalty                                           |
 | `--max-tokens`       | `BENCH_MAX_TOKENS`        | `None`                    | Maximum tokens for model response                                |
 | `--seed`             | `BENCH_SEED`              | `None`                    | Seed for deterministic generation                                |
 | `--limit`            | `BENCH_LIMIT`             | `None`                    | Limit evaluated samples (number or start,end)                    |

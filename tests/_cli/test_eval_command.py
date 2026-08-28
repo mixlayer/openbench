@@ -79,3 +79,36 @@ def test_eval_forwards_system_message_from_environment(monkeypatch):
     result = runner.invoke(app, ["eval", "--help"])
     assert result.exit_code == 0
     assert "--system-message" in result.output
+
+
+def test_eval_forwards_presence_penalty(monkeypatch):
+    """Test presence-penalty is forwarded from the CLI and environment."""
+    captured = {}
+    monkeypatch.setattr(
+        "openbench._cli.eval_command.load_task", lambda *_args, **_kwargs: object()
+    )
+    monkeypatch.setattr(
+        "openbench._cli.eval_command.eval",
+        lambda **kwargs: captured.update(kwargs) or [],
+    )
+    monkeypatch.setattr(
+        "openbench._cli.eval_command.patch_display_results", lambda: None
+    )
+
+    result = runner.invoke(
+        app,
+        ["eval", "mmlu", "--display", "none", "--presence-penalty", "0.5"],
+    )
+
+    assert result.exit_code == 0
+    assert captured["presence_penalty"] == 0.5
+
+    captured.clear()
+    result = runner.invoke(
+        app,
+        ["eval", "mmlu", "--display", "none"],
+        env={"BENCH_PRESENCE_PENALTY": "0.75"},
+    )
+
+    assert result.exit_code == 0
+    assert captured["presence_penalty"] == 0.75
